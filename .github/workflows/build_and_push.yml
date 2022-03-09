@@ -8,6 +8,7 @@ on:
       - 'README.md'
       - LICENSE
       - Dockerfiles/.template
+      - .gitignore
   repository_dispatch:
 
 jobs:
