@@ -18,7 +18,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Build container
-      run: "docker build --no-cache -f Dockerfiles/base.Dockerfile -t ${GITHUB_REPOSITORY}:baseimage ."
+      run: "docker build --no-cache -f Dockerfiles/base.Dockerfile -t latest -t ${GITHUB_REPOSITORY}:baseimage ."
 
     - name: Login to docker hub
       run: "echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin"
