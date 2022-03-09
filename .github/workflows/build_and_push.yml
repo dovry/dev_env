@@ -3,6 +3,7 @@ name: image build and push
 on: 
   push:
     branches:
+      - master
       - ansible # CHANGE THIS
     paths-ignore:
       - 'README.md'
