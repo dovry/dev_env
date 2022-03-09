@@ -25,3 +25,17 @@ jobs:
 
     - name: Push to registry
       run:  "docker push ${GITHUB_REPOSITORY}:baseimage"
+
+  trigger_docker_repo_dispatch:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch: ["ansible"] # Branch names
+    steps:
+      - name: Dispatch initiating repository event
+        run: |
+          curl -XPOST \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Content-Type: application/json" https://api.github.com/repos/dovry/docker_${{ matrix.branch }}/dispatches \
+          --data '{"event_type": "build_application"}'
