@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - master
-      - base
     paths-ignore:
       - 'README.md'
       - LICENSE
+      - Dockerfiles/.template
   repository_dispatch:
 
 jobs:
