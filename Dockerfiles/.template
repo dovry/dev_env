@@ -1,4 +1,4 @@
-FROM 	alpine:latest
+FROM 	dovry/dev_env:baseimage
 LABEL 	maintainer		"dovry"
 LABEL 	description		""
 
