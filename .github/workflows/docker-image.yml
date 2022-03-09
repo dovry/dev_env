@@ -1,8 +1,9 @@
-name: build and push to DockerHub
+name: base image build and push
 
 on: 
   push:
     branches:
+      - master
       - base
     paths-ignore:
       - 'README.md'
@@ -16,7 +17,7 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: Build container
-      run: "docker build --no-cache -t baseimage:${GITHUB_SHA} ."
+      run: "docker build --no-cache -f Dockerfiles/base.Dockerfile -t baseimage:${GITHUB_SHA} ."
 
     - name: Login to docker hub
       run: "echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin"
