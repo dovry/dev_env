@@ -1,9 +1,9 @@
-name: base image build and push
+name: image build and push
 
 on: 
   push:
     branches:
-      - master
+      - ansible
     paths-ignore:
       - 'README.md'
       - LICENSE
@@ -15,12 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - uses: FranzDiebold/github-env-vars-action@v2.3.1
 
     - name: Build container
-      run: "docker build --no-cache -f Dockerfiles/base.Dockerfile -t ${GITHUB_REPOSITORY}:baseimage ."
+      run: "docker build --no-cache -f Dockerfiles/base.Dockerfile -t ${GITHUB_REPOSITORY}:${GITHUB_BRANCH_NAME} ."
 
     - name: Login to docker hub
       run: "echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin"
 
     - name: Push to registry
-      run:  "docker push ${GITHUB_REPOSITORY}:baseimage"
+      run:  "docker push ${GITHUB_REPOSITORY}:${GITHUB_BRANCH_NAME}"
