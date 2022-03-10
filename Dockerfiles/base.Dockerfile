@@ -7,7 +7,7 @@ ENV 	user_dir 		"/home/${user_name}"
 # Install packages
 RUN apk add --no-cache \
 	zsh git vim grep zsh-autosuggestions zsh-syntax-highlighting bind-tools wget curl \
-	&& rm -r --force /var/cache/apk/*
+	&& rm -r -f /var/cache/apk/*
 
 # Add user $user_name
 RUN adduser --shell /bin/zsh --defaults --home-dir ${user_dir} ${user_name} \
