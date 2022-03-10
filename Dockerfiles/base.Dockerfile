@@ -10,9 +10,7 @@ RUN apk add --no-cache \
 	&& rm -r -f /var/cache/apk/*
 
 # Add user $user_name
-RUN adduser --shell /bin/zsh --defaults --home-dir ${user_dir} ${user_name} \
-	&& /bin/zsh ${user_dir}/.zshrc \
-	&& chown ${user_name}:${user_name} ${user_dir}/.zshrc
+RUN adduser -s /bin/zsh -D -h ${user_dir} ${user_name}
 
 # Change user to $user_name and set working dir to $user_name's home directory
 USER 	${user_name}
@@ -20,7 +18,10 @@ WORKDIR ${user_dir}
 
 # Install Zsh
 RUN sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
-	&& curl --location git.io/antigen > ${user_dir}/.antigen/antigen.zsh --create-dirs \
+	&& /bin/zsh ${user_dir}/.zshrc
+	
+RUN	chown ${user_name}:${user_name} ${user_dir}/.zshrc \
+	&& curl -L git.io/antigen -o ${user_dir}/.antigen/antigen.zsh --create-dirs \
 	&& git clone git://github.com/dovry/dotfiles.git ~/dotfiles
 
 # Setup dotfiles
