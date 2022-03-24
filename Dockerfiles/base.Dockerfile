@@ -23,9 +23,7 @@ RUN sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/ins
 	
 RUN	chown ${user_name}:${user_name} ${user_dir}/.zshrc \
 	&& curl -L git.io/antigen -o ${user_dir}/.antigen/antigen.zsh --create-dirs \
-	&& git clone https://github.com/dovry/dotfiles.git ~/dotfiles
-
-# Setup dotfiles
-RUN /bin/zsh dotfiles/shell_setup.sh
+	&& git clone https://github.com/dovry/dotfiles.git ~/dotfiles \
+	&& /bin/zsh dotfiles/shell_setup.sh
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
