@@ -1,6 +1,6 @@
 FROM 	alpine:latest
 LABEL 	maintainer		"dovry"
-LABEL 	description		"Ansible dockerfile built on my base image"
+LABEL 	description		"Ansible dockerfile built on a base image"
 
 RUN apk add --no-cache ansible
 
