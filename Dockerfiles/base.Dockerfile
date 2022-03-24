@@ -28,5 +28,4 @@ RUN	chown ${user_name}:${user_name} ${user_dir}/.zshrc \
 # Setup dotfiles
 RUN /bin/zsh dotfiles/shell_setup.sh
 
-#ENTRYPOINT ["/bin/zsh"]
 ENTRYPOINT ["tail", "-f", "/dev/null"]
