@@ -1,6 +1,7 @@
 FROM 	alpine:latest
 LABEL 	maintainer		"dovry"
-LABEL 	description		"base image for a development environment with zsh, git and vim. Also used for testing dotfile setup"
+LABEL 	description1	"base image for a development environment with zsh, git and vim"
+LABEL	description2	"Also used for testing various shell scripts"
 ENV 	user_name 		"docker"
 ENV 	user_dir 		"/home/${user_name}"
 
