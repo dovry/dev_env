@@ -21,3 +21,5 @@ HEALTHCHECK \
 	--start-period=5s \
 	--retries=3 CMD [ "" ]
 # use 'command -v binary_here' as a fallback for HEALTHCHECKS
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
