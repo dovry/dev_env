@@ -20,3 +20,5 @@ HEALTHCHECK \
 	--timeout=30s \
 	--start-period=5s \
 	--retries=3 CMD [ "ansible localhost -m setup" ]
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
