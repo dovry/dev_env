@@ -21,9 +21,9 @@ USER ${user_name}
 WORKDIR ${ansi_dir}
 
 RUN \
-   ansible localhost -m ansible.builtin.file -a "path=${ansi_dir}/facts state=directory" \
-&& ansible localhost -m ansible.builtin.file -a 'path=${ansi_dir}/inventory/hosts state=touch' \
-&& ansible localhost -m ansible.builtin.file -a 'src=/home/docker/.ansible dest=/home/docker/ansible state=link' \
+   ansible localhost -m ansible.builtin.file 	-a 'path=${ansi_dir}/facts/.dummyfile state=touch' \
+&& ansible localhost -m ansible.builtin.file 	-a 'path=${ansi_dir}/inventory/hosts state=touch' \
+&& ansible localhost -m ansible.builtin.file 	-a 'src=/home/docker/.ansible dest=/home/docker/ansible state=link' \
 && ansible localhost -m ansible.builtin.get_url -a 'url=https://tinyurl.com/ansiblecfg dest=${ansi_dir}/ansible.cfg mode=740'
 
 # END CONFIG
