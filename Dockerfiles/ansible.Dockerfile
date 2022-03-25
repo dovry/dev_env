@@ -17,8 +17,8 @@ WORKDIR ${user_dir}
 
 HEALTHCHECK \
 	--interval=30s \
-	--timeout=30s \
+	--timeout=5s \
 	--start-period=5s \
-	--retries=3 CMD [ "ansible localhost -m setup" ]
+	--retries=3 CMD [ "command -v ansible" ]
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
