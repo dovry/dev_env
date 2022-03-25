@@ -26,10 +26,10 @@ RUN	chown ${user_name}:${user_name} ${user_dir}/.zshrc \
 	&& git clone https://github.com/dovry/dotfiles.git ~/dotfiles
 
 # Setup dotfiles
-SHELL ["/bin/zsh", "-c"]
 
-RUN /bin/zsh dotfiles/shell_setup.shell
+RUN /bin/zsh dotfiles/shell_setup.sh
 
+SHELL ["/bin/zsh"]
 
 HEALTHCHECK \
 	--interval=10s \
