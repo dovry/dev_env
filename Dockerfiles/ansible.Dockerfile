@@ -4,7 +4,8 @@ LABEL 	description		"Ansible dockerfile built on a base image"
 ENV 	user_name 		"docker"
 ENV 	user_dir 		"/home/${user_name}"
 ENV		ansi_dir		"${user_dir}/.ansible"
-
+ENV 	ANSI_FOLDERS	"facts files inventory playbooks plugins roles inventory/group_vars inventory/host_vars"
+ENV 	ANSI_FILES	 	"inventory/hosts hosts ansible.cfg"
 
 # NEW PKGS
 SHELL ["/bin/sh", "-c"]
@@ -20,9 +21,9 @@ USER ${user_name}
 WORKDIR ${ansi_dir}
 
 RUN mkdir -p facts files inventory playbooks roles \
-	&& echo "localhost" > inventory/hosts \
-	&& wget -O ansible.cfg https://tinyurl.com/ansiblecfg \
-	&& ln -s ${ansi_dir} ${user_dir}/ansible
+	&& ansible localhost -m ansible.builtin.file -a 'path=${ansi_dir}/inventory/hosts state=touch' \
+	&& ansible localhost -m ansible.builtin.file -a 'src=/home/docker/.ansible dest=/home/docker/ansible state=link' \
+	&& ansible localhost -m ansible.builtin.get_url -a 'url=https://tinyurl.com/ansiblecfg dest=${ansi_dir}/ansible.cfg mode=740'
 
 # END CONFIG
 
