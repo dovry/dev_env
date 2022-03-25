@@ -12,7 +12,6 @@ USER root
 
 RUN apk add --no-cache ansible
 
-
 # END NEW PKGS
 SHELL ["/bin/zsh","-c"]
 USER ${user_name}
@@ -20,10 +19,10 @@ USER ${user_name}
 # BEGIN CONFIG
 WORKDIR ${ansi_dir}
 
-RUN mkdir -p ${ansi_dir}/{facts,files,inventory,playbooks,roles}
-RUN wget -O ansible.cfg https://tinyurl.com/ansiblecfg
-RUN ln -s ${ansi_dir} ${user_dir}/ansible
-RUN echo "localhost" > ${ansi_dir}/inventory/hosts
+RUN mkdir -p ${ansi_dir}/{facts,files,inventory,playbooks,roles} \
+	&& echo "localhost" > ${ansi_dir}/inventory/hosts \
+	&& wget -O ansible.cfg https://tinyurl.com/ansiblecfg \
+	&& ln -s ${ansi_dir} ${user_dir}/ansible
 
 # END CONFIG
 
