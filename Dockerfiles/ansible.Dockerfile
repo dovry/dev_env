@@ -16,7 +16,8 @@ RUN apk add --no-cache ansible
 USER 	${user_name}
 WORKDIR ${user_dir}
 
-RUN mkdir ${ansi_dir}/{${ansi_folders}} \
+RUN /bin/zsh \
+	&& mkdir ${ansi_dir}/{${ansi_folders}} \
 	&& wget -O ${ansi_dir}/ansible.cfg https://tinyurl.com/ansiblecfg \
 	&& ln -s ${ansi_dir} ${user_dir}/ansible \
 	&& echo "localhost" > ${ansi_dir}/inventory/hosts
