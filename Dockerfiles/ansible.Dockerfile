@@ -10,10 +10,11 @@ USER root
 
 RUN apk add --no-cache ansible
 
-
 # END CONTAINER CONFIG
 USER 	${user_name}
 WORKDIR ${user_dir}
+
+RUN ln -s ${user_dir}/.ansible ${user_dir}/ansible
 
 HEALTHCHECK \
 	--interval=30s \
