@@ -20,10 +20,10 @@ USER ${user_name}
 # BEGIN CONFIG
 WORKDIR ${ansi_dir}
 
-RUN mkdir -p facts files inventory playbooks roles \
-	&& wget -O ansible.cfg https://tinyurl.com/ansiblecfg \
-	&& ln -s ${ansi_dir} ${user_dir}/ansible \
-	&& echo "localhost" > ${ansi_dir}/inventory/hosts
+RUN mkdir -p ${ansi_dir}/{facts,files,inventory,playbooks,roles}
+RUN wget -O ansible.cfg https://tinyurl.com/ansiblecfg
+RUN ln -s ${ansi_dir} ${user_dir}/ansible
+RUN echo "localhost" > ${ansi_dir}/inventory/hosts
 
 # END CONFIG
 
