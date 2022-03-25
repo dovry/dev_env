@@ -14,8 +14,8 @@ RUN apk add --no-cache ansible
 
 
 # END NEW PKGS
-USER ${user_name}
 SHELL ["/bin/zsh","-c"]
+USER ${user_name}
 
 # BEGIN CONFIG
 WORKDIR ${ansi_dir}
