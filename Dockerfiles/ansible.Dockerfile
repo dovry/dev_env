@@ -19,12 +19,14 @@ USER ${user_name}
 # BEGIN CONFIG
 WORKDIR ${ansi_dir}
 
-RUN mkdir -p ${ansi_dir}/{facts,files,inventory,playbooks,roles} \
-	&& echo "localhost" > ${ansi_dir}/inventory/hosts \
+RUN mkdir -p facts files inventory playbooks roles \
+	&& echo "localhost" > inventory/hosts \
 	&& wget -O ansible.cfg https://tinyurl.com/ansiblecfg \
 	&& ln -s ${ansi_dir} ${user_dir}/ansible
 
 # END CONFIG
+
+WORKDIR ${user_dir}
 
 HEALTHCHECK \
 	--interval=30s \
