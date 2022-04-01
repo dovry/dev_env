@@ -32,9 +32,9 @@ RUN /bin/zsh dotfiles/shell_setup.sh
 SHELL ["/bin/zsh"]
 
 HEALTHCHECK \
-	--interval=10s \
-	--timeout=5s \
-	--start-period=5s \
+	--interval=30s \
+	--timeout=10s \
+	--start-period=10s \
 	--retries=3 CMD [ "command -v zsh" ]
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
