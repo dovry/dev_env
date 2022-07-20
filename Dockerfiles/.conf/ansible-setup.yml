@@ -16,8 +16,9 @@
     with_items:
       - facts
       - files
-      - inventory
       - inventory/group_vars
       - inventory/host_vars
       - playbooks
       - roles
+
+#      - inventory
