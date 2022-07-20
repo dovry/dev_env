@@ -1,47 +1,37 @@
 FROM 	dovry/dev_env:baseimage
 LABEL 	maintainer		"dovry"
-LABEL 	description		"Ansible dockerfile built on a base image"
+LABEL 	description		"Runs Ansible"
 ENV 	user_name 		"docker"
 ENV 	user_dir 		"/home/${user_name}"
-ENV		ansi_dir		"${user_dir}/.ansible"
-ENV 	ANSIBLE_FOLDERS	"facts files inventory playbooks plugins roles inventory/group_vars inventory/host_vars"
+ENV 	ansi_dir		"${user_dir}/.ansible"
 
-# NEW PKGS
 SHELL ["/bin/sh", "-c"]
 USER root
+# NEW CONTAINER CONFIG
 
-RUN apk add --no-cache build-base py3-cffi
+# install python3 + pip3 + ansible
+RUN \ 
+apk add --no-cache --quiet python3 py3-pip \
+&& rm -rf /var/cache/apk/* \
+&& pip3 install ansible \
+&& ln -s ${user_dir}/.ansible ${user_dir}/ansible
 
-# END NEW PKGS
-
-SHELL ["/bin/zsh","-c"]
+SHELL ["/bin/zsh", "-c"]
 USER ${user_name}
-
-RUN pip3 install ansible
-
-# BEGIN CONFIG
 WORKDIR ${ansi_dir}
 
-#RUN \
-#	ansible localhost -m ansible.builtin.file 	-a 'path=${ansi_dir}/inventory/hosts state=touch' \
-#&& 	
-#&& 	ansible localhost -m ansible.builtin.get_url -a 'url=https://tinyurl.com/ansiblecfg dest=${ansi_dir}/ansible.cfg mode=740'
+# copy Ansible configuration
+COPY \
+Dockerfiles/.conf/ansible-setup.yml \
+Dockerfiles/.conf/ansible.cfg \
+${ansi_dir}
 
-RUN ansible localhost -m ansible.builtin.file 	-a 'src=${ansi_dir} dest=/home/docker/ansible state=link' \
-&& for folder in ${ANSIBLE_FOLDERS}; do mkdir -p ${ansi_dir}/$folder; done
-
-#mkdir -p ${ansi_dir}/inventory
-
-# END CONFIG
-
-WORKDIR ${user_dir}
+# Use Ansible to configure itself (idempotency check with 'repeat' zsh command)
+# https://zsh.sourceforge.io/Doc/Release/Shell-Grammar.html ctrl+f 'repeat'
+RUN repeat 2 ansible-playbook ${ansi_dir}/ansible-setup.yml
 
 HEALTHCHECK \
 	--interval=30s \
-	--timeout=5s \
+	--timeout=30s \
 	--start-period=5s \
-	--retries=3 CMD [ "command -v ansible" ]
-
-SHELL ["/bin/zsh"]
-
-ENTRYPOINT ["/bin/zsh"]
+	--retries=3 CMD [ "$(which ansible) --version" ]
