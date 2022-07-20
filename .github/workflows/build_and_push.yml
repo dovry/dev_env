@@ -19,9 +19,6 @@ jobs:
       branch: ansible # CHANGE THIS
     steps:
     - uses: actions/checkout@v1
-      
-    - name: echo var
-      run: "echo ${GITHUB_BRANCH_NAME}"
 
     - name: Build container
       run: "docker build --no-cache -f Dockerfiles/${branch}.Dockerfile -t ${GITHUB_REPOSITORY}:${branch} ."
