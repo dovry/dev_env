@@ -1,17 +1,13 @@
 ---
 - hosts: localhost
   vars:
-    ansi_dir: "/home/docker/.ansible"
-    ansi_user: docker
-    ansi_group: docker
+    ansi_dir: "/root/.ansible"
   tasks:
 
   - name: ansible-setup.yml --- create ansible directory structure
     ansible.builtin.file:
       path: "{{ ansi_dir}}/{{ item }}"
       state: directory
-      owner: "{{ ansi_user }}"
-      group: "{{ ansi_group }}"
       mode: '0755'
     with_items:
       - facts

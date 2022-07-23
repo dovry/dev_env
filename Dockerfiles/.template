@@ -1,22 +1,10 @@
 FROM 	dovry/dev_env:baseimage
 LABEL 	maintainer		"dovry"
 LABEL 	description		""
-ENV 	user_name 		"docker"
-ENV 	user_dir 		"/home/${user_name}"
-
-USER root
-# NEW CONTAINER CONFIG
 
 
-RUN apk add --no-cache \
-# package names here
-&& rm -r -f /var/cache/apk/*
+RUN apk add --no-cache <package name>
 
-
-
-# END CONTAINER CONFIG
-USER 	${user_name}
-WORKDIR ${user_dir}
 
 HEALTHCHECK \
 	--interval=30s \
