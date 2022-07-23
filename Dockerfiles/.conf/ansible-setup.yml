@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  vars:
+    ansi_dir: "/root/.ansible"
+  tasks:
+
+  - name: ansible-setup.yml --- create ansible directory structure
+    ansible.builtin.file:
+      path: "{{ ansi_dir}}/{{ item }}"
+      state: directory
+      mode: '0755'
+    with_items:
+      - facts
+      - files
+      - inventory/group_vars
+      - inventory/host_vars
+      - playbooks
+      - roles
+
+#      - inventory
