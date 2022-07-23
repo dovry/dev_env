@@ -1,10 +1,8 @@
 name: image build and push
-# DO NOT COMMIT THIS FILE TO MASTER
 on: 
   push:
     branches:
       - master
-      - ansible
     paths-ignore:
       - 'README.md'
       - LICENSE
@@ -16,7 +14,7 @@ jobs:
   build_and_run:
     runs-on: ubuntu-latest
     env:
-      branch: ansible # CHANGE THIS
+      branch: master # CHANGE THIS
     steps:
     - uses: actions/checkout@v1
 
